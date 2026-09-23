@@ -793,6 +793,7 @@ function project(v){ const p = v.clone().project(camera); return { x:(p.x+1)/2*h
 /* ════════════════════════ NIGHT ════════════════════════ */
 const nightFx = new THREE.Group(); scene.add(nightFx);
 const defaultLamp = s => s.cat==='building' || s.cat==='special';
+const NIGHT_REAL_LIGHTS = 6, nightPoolGeo = new THREE.PlaneGeometry(1, 1).rotateX(-Math.PI/2);
 function applyNight(){
   const n = S.night, N = RIG.night;
   hemi.color.set(n ? N.hemi.sky : RIG.hemi.sky); hemi.groundColor.set(n ? N.hemi.ground : RIG.hemi.ground); hemi.intensity = n ? N.hemi.intensity : RIG.hemi.intensity;
@@ -800,12 +801,18 @@ function applyNight(){
   applyGhostLook(n);
   nightFx.clear();
   if (!n || !V) return;
-  // warm windows: a lamp pool in front of every placed building
-  const lamps = placed.map(slotById).filter(TH().nightLamp || defaultLamp).slice(0, 6);
-  lamps.forEach(s => { const f = footprint(s);
-    const pl = new THREE.PointLight(0xFFA84A, s.w ? 2.2 : 1.4, 2.6, 1.6); pl.position.set(f.cx + .45*(s.w||1), .55, f.cz + .45*(s.d||1)); nightFx.add(pl);
-    const g = new THREE.Sprite(new THREE.SpriteMaterial({ map:TEX.glow, color:0xFFB060, transparent:true, opacity:.3, blending:THREE.AdditiveBlending, depthWrite:false }));
-    g.position.copy(pl.position); g.scale.setScalar(s.w ? 1.5 : 1.1); nightFx.add(g); });
+  // warm windows. EVERY lit piece gets an unlit glow: an additive halo + a warm pool on the ground in front of it (both cost what an
+  // emissive material costs). Real PointLights stay capped at NIGHT_REAL_LIGHTS (each one is paid by every lit fragment), and go to the
+  // pieces that matter most: the 2×2 special first, then the other 2×2s, then board order. Windows / flames / crystals are emissive in the themes.
+  const lamps = placed.map(slotById).filter(TH().nightLamp || defaultLamp);
+  const rank = s => (s.cat === 'special' ? 0 : (s.w||1) > 1 ? 1 : 2);
+  const real = new Set([...lamps].sort((a, b) => rank(a) - rank(b)).slice(0, NIGHT_REAL_LIGHTS));
+  lamps.forEach(s => { const f = footprint(s), big = (s.w||1) > 1, pos = new THREE.Vector3(f.cx + .45*(s.w||1), .55, f.cz + .45*(s.d||1));
+    if (real.has(s)) { const pl = new THREE.PointLight(0xFFA84A, big ? 2.2 : 1.4, 2.6, 1.6); pl.position.copy(pos); nightFx.add(pl); }
+    else { const pool = new THREE.Mesh(nightPoolGeo, new THREE.MeshBasicMaterial({ map:TEX.glow, color:0xFFA84A, transparent:true, opacity:.34, blending:THREE.AdditiveBlending, depthWrite:false }));
+      pool.position.set(pos.x - .12*(s.w||1), TILE_TOP + .012, pos.z - .12*(s.d||1)); pool.scale.setScalar(big ? 1.9 : 1.3); pool.renderOrder = 2; nightFx.add(pool); }
+    const g = new THREE.Sprite(new THREE.SpriteMaterial({ map:TEX.glow, color:0xFFB060, transparent:true, opacity: real.has(s) ? .3 : .4, blending:THREE.AdditiveBlending, depthWrite:false }));
+    g.position.copy(pos); g.scale.setScalar(big ? 1.5 : 1.1); nightFx.add(g); });
   const r = rngFrom(5);
   for (let i=0;i<24;i++){
     const f = new THREE.Sprite(new THREE.SpriteMaterial({ map:TEX.glow, color:0xFFE9A0, transparent:true, opacity:.9, blending:THREE.AdditiveBlending, depthWrite:false }));
@@ -897,6 +904,8 @@ function growFields(before, frozen){
 }
 
 /* EXPAND — the ring is full: new ground rises in ring-wise, the soil block widens, the camera pulls back (1.7 s). */
+/* "Your lanes" / "Your railway": the header title, which every theme already writes as "Your …" (forest: "Forest glade" → "Your forest glade") */
+const yourTitle = th => /^Your /.test(th.title) ? th.title : 'Your ' + th.title.charAt(0).toLowerCase() + th.title.slice(1);
 async function expandLand(freezeAt){
   if (!V) return;
   const f0 = V.frame, r0 = V.ring, L0 = V.L;
@@ -908,7 +917,7 @@ async function expandLand(freezeAt){
   const m = new THREE.Matrix4(), q = new THREE.Quaternion(), sc = new THREE.Vector3(), p = new THREE.Vector3();
   const ease = x => x<.5 ? 4*x*x*x : 1 - Math.pow(-2*x+2, 3)/2;
   const banner = document.getElementById('banner');
-  document.getElementById('bannerT').textContent = 'Your '+TH().name.toLowerCase()+' grew';
+  document.getElementById('bannerT').textContent = yourTitle(TH())+' grew';
   banner.querySelector('span > span').textContent = TH().slots.filter(sl => slotRing(sl) === V.ring).length + ' new spots to build';
   const DUR = MOTION.expand.durationMs;
   const step = t => {
@@ -1000,7 +1009,7 @@ function renderChrome(){
   document.getElementById('title').textContent = th.title;
   const mins = S.mins;
   const next = MIN_PER_PIECE - (mins % MIN_PER_PIECE);
-  document.getElementById('subLine').textContent = done ? mins+' min of good time today · '+th.name.toLowerCase()+' complete'
+  document.getElementById('subLine').textContent = done ? mins+' min of good time today · '+th.name+' complete'
     : !mins ? 'No good time yet today · first piece at 5 min'
     : mins+' min of good time today · ' + (rd ? plural(rd,'piece')+' ready' : earned() >= DAILY_CAP ? 'that’s today’s 12' : 'next piece in '+next+' min');
   // theme card

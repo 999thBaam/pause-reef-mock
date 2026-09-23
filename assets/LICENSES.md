@@ -175,9 +175,154 @@ Procedural (original, in `themes/town.js`): sidewalks, building sites (5 stages 
 
 Not used: the rest of both Kenney city kits (grey commercial towers read too cold for a cozy town).
 
+## Merged from `diwali/LICENSES.md`: Diwali lanes theme (`themes.html?theme=diwali`; the per-theme file stays next to its assets)
+
+### assets/diwali — licences
+
+No new third-party files. Everything in the Diwali lanes theme is procedural three.js geometry (themes/diwali.js), except
+reused shared CC0 kit pieces already listed in assets/LICENSES.md:
+
+| used for | file | source | licence |
+|---|---|---|---|
+| neem / mango trees (CommonTree_1/2/3) | assets/kit-a/kit-a.glb | Quaternius Stylized Nature MegaKit | CC0 |
+| coconut palms (palm-detailed-bend/straight) | assets/pirate/pirate-kit.glb | Kenney Pirate Kit | CC0 |
+| grass tufts + meadow flowers (Grass_1/2, Flower_3/4) | assets/farm/farm.glb | Quaternius Ultimate Crops / farm packs | CC0 |
+| cows (recoloured at runtime) | assets/animals/Cow.glb | Quaternius Ultimate Animated Animals | CC0 |
+| album.jpg | assets/diwali/album.jpg | rendered from this theme (album-thumbs.sh) | own render |
+
+## Merged from `zen/LICENSES.md`: Zen garden theme (`themes.html?theme=zen`; the per-theme file stays next to its assets)
+
+### zen — asset licences
+
+| folder | what | source | licence | checked |
+|---|---|---|---|---|
+| (none new) | Cherry trees (TwistedTree_1/3/5, leaves recoloured sakura pink in code), Japanese maples (CommonTree_2/3, recoloured momiji scarlet), black pine (Pine_1/3), grass tufts | shared `assets/kit-a/kit-a.glb` = Quaternius Stylized Nature MegaKit, https://quaternius.com | CC0 1.0 | already listed in `assets/LICENSES.md` (kit-a row) |
+| — | Tea house, pagoda, gate house, shrines, bell tower, torii, stone lanterns, raked gravel, bonsai, bamboo, koi + ponds, waterfall, shishi-odoshi, bridges, fences, cranes, tanuki, cat, petals | procedural three.js in `themes/zen.js` | original code, no third-party assets | — |
+
+`album.jpg` is rendered from the theme itself (`bash album-thumbs.sh zen`).
+
+Not used: Poly Pizza "Torii Gate" / "Temple" / "Japanese Door" by Quaternius (CC0 per Quaternius) were checked as candidates but not imported (procedural pieces kept one consistent style); "Pagoda" / "Gate" by Poly by Google are CC-BY — rejected.
+
+## Merged from `camp/LICENSES.md`: Mountain camp theme (`themes.html?theme=camp`; the per-theme file stays next to its assets)
+
+### Mountain camp theme: asset licences (checked 2026-09-24)
+
+All 3D content is CC0 1.0. Credit is optional, and it's given here anyway.
+
+| File | What | Source | Licence, and where I checked it |
+|---|---|---|---|
+| `camp.glb` | **Quaternius Survival Pack**, 10 of its 32 models: Tent, Bonfire, Wood Log, Axe, Backpack, Raft (packed, unused), Raft Paddle, Wooden Torch, Pot, Shovel | https://poly.pizza/bundle/Survival-Pack-XzvQPP0yWB (GLBs from each model page, e.g. https://poly.pizza/m/5Q7qIrfDxA Tent, https://poly.pizza/m/k1e0cOzi8A Bonfire) | CC0: the bundle page lists every one of the 32 models as "CC0 1.0", and each model page says "CC0 1.0". Quaternius' own licence page https://quaternius.com/license.html covers all packs (CC0). Poly Pizza downloads carry no License.txt, so none is copied here |
+| `album.jpg` | A crop of this page's own render of the camp at 40/40 (`bash album-thumbs.sh camp`) | own render | CC0 (derivative) |
+| (reused, not copied) | Pines (Pine_1/3/5), aspens (CommonTree_1/2), grass, flowers, rocks and pebbles = Quaternius Stylized Nature MegaKit (`assets/kit-a`); residents Stag / Deer / Fox / Wolf = Quaternius Ultimate Animated Animals (`assets/animals`) | see the shared `assets/LICENSES.md` | CC0 |
+| (procedural) | Log cabin, woodshed, ranger lookout tower, boathouse, orange A-frame tent, waterfall, creek, mountain spring, lake + canoe with paddler, bonfire stages, firewood stacks, berry + veg patches, trails, signposts, benches, lanterns, fishing dock, split-rail fence, summit cairn with prayer flags + butter lamps, the snowy peak backdrop, meadow tile texture, smoke, hawks | written in `themes/camp.js` | own work |
+
+#### Processing
+- Blender 5 (`-b --python`): each Poly Pizza GLB imported, its meshes joined into one top-level node named after the model, exported as one GLB (366 KB). Colours are the pack's own material colours; nothing recoloured.
+- glTF-Transform 4.5 `dedup` + `meshopt` → 120 KB. Total `assets/camp/` ≈ 0.18 MB.
+
+#### Not used
+- KayKit Forest Nature (`assets/kit-b`): its trees rendered as flat green blobs next to the MegaKit pines, so every conifer here is from the MegaKit instead.
+- No CC0 animated bear was found within the time budget (the Quaternius Ultimate Animated Animals set has none), so the fourth resident is the Wolf.
+
+## Merged from `castle/LICENSES.md`: Fantasy castle theme (`themes.html?theme=castle`; the per-theme file stays next to its assets)
+
+### Fantasy castle (castle) theme: asset licences (checked 2026-09-24)
+
+All 3D content is CC0 1.0. Credit is optional; given here anyway.
+
+| File | What | Source | Licence, and where I checked it |
+|---|---|---|---|
+| `castle.glb` (`ck_*`) | **Kenney Castle Kit 2.0**, 66 models: square/hexagon/round tower modules, roofs, arches, walls, gates, door, flags + banners, drawbridge, bridges, stairs, rocks, pines. The 10 siege weapons were NOT packed (no weapons in a mindfulness app) | https://kenney.nl/assets/castle-kit (`kenney_castle-kit.zip`, GLB format + `colormap.png`) | CC0: the page says "Creative Commons CC0", and `License.txt` in the zip says "License: (Creative Commons Zero, CC0)". Copy: `Kenney-CastleKit-License.txt` |
+| `Dragon.glb` | **Quaternius "Dragon"** (Ultimate Monsters bundle), animated (Flying_Idle, Fast_Flying, Yes, …) | https://poly.pizza/m/3rUm1cN3yp (bundle https://poly.pizza/bundle/Ultimate-Monsters-Bundle-5oyGWAmOB6) | CC0: the model page metadata says `"Licence":"CC0 1.0"`; Quaternius releases all packs CC0. Colours brightened at runtime |
+| `Pigeon.glb` | **Quaternius "Pigeon"** (Ultimate Monsters bundle), animated; recoloured white at runtime → doves | https://poly.pizza/m/9NGlBTpDEr | CC0: model page `"Licence":"CC0 1.0"` |
+| (reused, not copied) | Well, fountain basin, barrels, crates, sacks, cart, hedge, lilies, reeds, stone pile = KayKit Medieval Hexagon / Kenney Fantasy Town (`assets/village/village.glb`); oaks + meadow tufts = Quaternius Stylized Nature MegaKit (`assets/kit-a`); horses = Quaternius Ultimate Animated Animals (`assets/animals`) | see `assets/village/LICENSES.md` and the shared `assets/LICENSES.md` | CC0 |
+| (procedural) | Growing castle walls (courses + scaffold), enchanted glowing flower beds, topiary, torches, stables, lily pool, moat channel + rim, crystal + shards, low ramparts, pennant posts, magic motes | `themes/castle.js` | own work |
+
+#### Processing
+- Blender 5 (`-b --python`): each Kenney GLB imported, meshes joined into one top-level node `ck_<name>` (`-` → `_`), one GLB (750 KB) → glTF-Transform 4.5 `dedup` + `meshopt` → 274 KB. Colormap kept as PNG.
+- Dragon / Pigeon: glTF-Transform `meshopt` only (72 KB / 36 KB).
+- Theme total ≈ 0.46 MB (+ album.jpg).
+
+#### Not used
+- Kenney siege kit (ballista, catapult, trebuchet, ram, siege tower): weapons.
+- Quaternius Fantasy Props MegaKit / KayKit Dungeon: not needed; crystals and magic are procedural.
+
+## Merged from `railway/LICENSES.md`: Railway valley theme (`themes.html?theme=railway`; the per-theme file stays next to its assets)
+
+### Railway valley theme (`themes.html?theme=railway`): asset licences (checked 2026-09-24)
+
+| File | What | Source | Licence, and where I checked it |
+|---|---|---|---|
+| `railway.glb` | Kenney **Train Kit 1.1**: steam locomotives a/b/c, passenger coaches (`locomotive-passenger-a/b`), coal, wood and lumber wagons (8 models) | https://kenney.nl/assets/train-kit | CC0: the page says "CC0 licensed!" / "Creative Commons CC0"; `License.txt` in the zip says "License: (Creative Commons Zero, CC0)" (copied here as `Kenney-TrainKit-License.txt`) |
+| `album.jpg` | album card art | a screenshot of this theme at 40/40 (`bash album-thumbs.sh railway`) | original work |
+
+Processing: no Blender needed (source is GLB). The 8 GLBs were merged with glTF-Transform 4.5 (`mergeDocuments`, one top-level node per model named after its file without `train-`), then `unpartition + dedup + prune + weld + meshopt`: 146 KB. The shared 64 px colormap stays PNG.
+
+Reused shared assets (already in `assets/LICENSES.md`, not copied): MegaKit (kit `a`) oaks, pines, bushes, grass and flowers; the farm kit (Quaternius Farm Buildings + Ultimate Crops) water tower and apple trees `Apple_1/2/4` + `Apple_Crop`; the village kit (Kenney Fantasy Town / KayKit) cottages `building_home_A_red/_A_green/_B_yellow`, crates and sack; `assets/farm/Sheep.glb` and `assets/animals/Cow.glb` + `assets/thumbs/Cow.png` (residents).
+
+Procedural (original, in `themes/railway.js`): the track (straight / curve / level crossing), the station, signal box, engine shed, goods shed, semaphore signals, lamp & bench, river / waterfall pool / stone bridge / lake, wheat fields (5 stages), hedgerow, the mountain tunnel with viaduct and waterfall, and the steam puffs.
+
+Not used: the Kenney Train Kit's `railroad-*` and `track*` pieces (their curve radii don't match the 1-tile grid; the track is procedural in the same lavender-rail look), trams, diesel/electric sets. Quaternius Modular Train Pack was not needed (Kenney covers the trains; stations are procedural).
+
+## Merged from `fairy/LICENSES.md`: Fairy wood theme (`themes.html?theme=fairy`; the per-theme file stays next to its assets)
+
+### Fairy wood (`?theme=fairy`): asset licences
+
+No new third-party files. Everything built in the theme is procedural (three.js geometry in `themes/fairy.js`).
+
+| folder | what | source | licence | checked |
+|---|---|---|---|---|
+| assets/kit-a (shared) | twisted trees (leaves re-tinted teal/lilac in code), Fern_1, Plant_7, grass/clover/mushroom/flower tufts | Quaternius Stylized Nature MegaKit, quaternius.com | CC0 | shared kit, already recorded in assets/LICENSES.md |
+| assets/animals (shared) | Fox, Deer (residents) | Quaternius Ultimate Animated Animal Pack, quaternius.com | CC0 | shared kit, already recorded in assets/LICENSES.md |
+| assets/thumbs (shared) | Fox.png, Deer.png resident chips | rendered from the above | CC0 (derived) | n/a |
+| assets/fairy/album.jpg | album card art | rendered by `album-thumbs.sh fairy` | own render | n/a |
+
+Code-built (no asset): toadstool manor/cottage/inn, stump homes, acorn cottage, lantern tree house, mushroom tower, giant mushrooms,
+flower rings, dewdrop fountain, waterfall, moonlit pond, lily brook, willow, stepping stones, lantern post, twig bridge/fences,
+fairy lights, the Tree of Light, owl, rabbits, snails, butterflies, fireflies.
+
+Not used: Quaternius Fantasy Props MegaKit and KayKit packs. They weren't needed, so nothing was downloaded.
+
+## Merged from `pets/LICENSES.md`: Pet park theme (`themes.html?theme=pets`; the per-theme file stays next to its assets)
+
+### Pet park (`?theme=pets`): asset licences (checked 2026-09-24)
+
+All 3D content is CC0 1.0. Credit is optional; given here anyway.
+
+| File | What | Source | Licence, and where I checked it |
+|---|---|---|---|
+| `pet-dog.glb`, `pet-cat.glb`, `pet-bunny.glb`, `pet-pig.glb`, `pet-chick.glb`, `pet-parrot.glb` | **Kenney Cube Pets 2.0** (6 of the pack's 24 animals), node-animated: static, idle, walk, run, eat, dance, gesture-positive/negative. Used for the residents, the ambient pets and the carousel riders. A `Hop` clip (walk legs + a bounce) is added at runtime | https://kenney.nl/assets/cube-pets (`kenney_cube-pets_1.0.zip`, GLB format + `Textures/colormap.png`) | CC0: the page says "Creative Commons CC0", and `License.txt` in the zip says "License: (Creative Commons Zero, CC0)". Copy: `Kenney-CubePets-License.txt` |
+| (reused, not copied) | Round/parasol trees, pastel bushes, grass tufts = KayKit Forest Nature Pack (`assets/kit-b/kit-b.glb`), re-tinted at runtime with `assets/kit-b/forest_texture_tints.webp` (pink / lavender / gold / mint columns) | see the shared `assets/LICENSES.md` | CC0 |
+| `album.jpg` | album card art | rendered by `bash album-thumbs.sh pets` | own render |
+| (procedural) | Pet café, dog house, cat tower, bunny hutch, vet cottage, bird houses, sprinkler fountain, splash pool, splash pond, duck pond + rubber ducks, carrot patch / flower maze / agility course (5 growth stages), cream paths, food bowls, beach balls, toy pile, benches, swing, picket fences, rainbow carousel, kite, bubbles, ground tile texture | `themes/pets.js` | own work |
+
+#### Processing
+- Cube Pets GLBs: glTF-Transform 4.5 `dedup` + `meshopt` (the external colormap is embedded as PNG) → 51–66 KB each, 342 KB total. Theme total ≈ 0.42 MB with album.jpg.
+
+#### Not used
+- Kenney Cube Pets: the other 18 animals (zoo/wild ones: lion, tiger, giraffe, elephant, panda, koala, penguin, polar bear, monkey, fox, deer, cow, beaver, hog, crab, fish, bee, caterpillar). Only pet-like animals were packed.
+- Kenney Mini Market / Furniture Kit / Nature Kit and KayKit Block Bits / Furniture Bits: checked (Kenney pages say CC0) but not downloaded. None of them has pet houses, and one procedural toy style for every prop read more consistent with the blocky Cube Pets inside the time box.
+
+## Merged from `oasis/LICENSES.md`: Desert oasis theme (`themes.html?theme=oasis`; the per-theme file stays next to its assets)
+
+### Desert oasis theme: asset licences (checked 2026-09-24)
+
+No new 3D files. Everything in this theme is either procedural (own work) or reuses CC0 kits already in the repo.
+
+| File / source | What | Licence, and where I checked it |
+|---|---|---|
+| `assets/dino/palms.glb` (reused, not copied) | Date palms: **Quaternius Ultimate Stylized Nature "Palm Trees"** (PalmTree_3, PalmTree_4) | CC0 1.0: https://poly.pizza/m/VYslw9DEi6, see `assets/dino/LICENSES.md` |
+| `assets/kit-a/kit-a.glb` (reused) | Rocks (Rock_Medium_1–3), dry grass tufts: **Quaternius Stylized Nature MegaKit** | CC0, see the shared `assets/LICENSES.md` |
+| `assets/animals/Fox.glb` (reused) | Fennec fox: **Quaternius Ultimate Animated Animals** Fox, recoloured sandy at runtime, ear bones scaled 1.6× | CC0, see the shared `assets/LICENSES.md` |
+| `album.jpg` | Crop of this page's own render of the oasis at 40/40 (`bash album-thumbs.sh oasis`) | own render |
+| (procedural, `themes/oasis.js`) | Haveli, houses, domed pavilion, caravanserai, tents, lantern bazaar, well, fountain, pools, reeds, acacias, cacti, agave, charbagh gardens, date nursery, rugs, pots, lanterns, mud walls, the sunset chhatri, camels, flamingos, hawk, sand motes, sand tile texture | own work |
+
+#### Not used
+- Camels on Poly Pizza (https://poly.pizza/search/camel): five are "Poly by Google" (CC-BY 3.0) and one by "jeremy" (also attribution-licensed). None are CC0, so the camels are built in code instead.
+
 ## Album card art (checked 2026-09-24)
 
 | Folder | What | Source | Licence |
 |---|---|---|---|
-| `<id>/album.jpg` (all 10 themes: farm, forest, reef, village, pirate, space, dino, winter, halloween, town) | the album card thumbnail: this page's own render of the theme at its album state (`themes.html?albumsnap=1&theme=<id>`, saved by `album-thumbs.sh`) | own render of the CC0 models above | CC0 (derivative) |
+| `<id>/album.jpg` (all 18 themes: farm, forest, reef, village, pirate, space, dino, winter, halloween, town, diwali, zen, camp, castle, railway, fairy, pets, oasis) | the album card thumbnail: this page's own render of the theme at its album state (`themes.html?albumsnap=1&theme=<id>`, saved by `album-thumbs.sh`) | own render of the CC0 models above | CC0 (derivative) |
 | `album/farm.jpg`, `album/forest.jpg` | older hand-cropped thumbnails, superseded by `farm/album.jpg` / `forest/album.jpg`, no longer referenced | own render | CC0 (derivative) |

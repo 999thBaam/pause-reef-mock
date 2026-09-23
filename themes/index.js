@@ -10,6 +10,14 @@ import dino from './dino.js';
 import winter from './winter.js';
 import halloween from './halloween.js';
 import town from './town.js';
+import diwali from './diwali.js';
+import zen from './zen.js';
+import camp from './camp.js';
+import castle from './castle.js';
+import fairy from './fairy.js';
+import railway from './railway.js';
+import pets from './pets.js';
+import oasis from './oasis.js';
 
 export const THEMES = [
   farm,
@@ -22,4 +30,12 @@ export const THEMES = [
   winter,
   halloween,
   town,
+  diwali,
+  zen,
+  camp,
+  castle,
+  fairy,
+  railway,
+  pets,
+  oasis,
 ];

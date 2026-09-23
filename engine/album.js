@@ -40,7 +40,9 @@ export function albumHTML(n, albumShot){
     html += card('', artOf(p.t), p.t.name, p.done ? p.total+' of '+p.total+' · '+p.t.dates : p.prog+' of '+p.total+' · waiting, no rush',
       p.done ? doneBadge : '<span class="badge">'+p.prog+'/'+p.total+'</span>', p.done ? null : (p.prog/p.total*100).toFixed(0));
   });
-  html += '</div><div class="shelfh"><b>Coming next</b><span>one every 2 weeks</span></div><div class="shelf">';
+  html += '</div>';
+  if (!upcoming.length) return html;                       // the last season: no empty "Coming next" shelf
+  html += '<div class="shelfh"><b>Coming next</b><span>one every 2 weeks</span></div><div class="shelf">';
   upcoming.forEach((u, i) => { html += card('locked', '<svg viewBox="0 0 128 128" style="color:rgba(22,50,79,.18)">'+(u.silhouette||'')+'</svg>', u.name, 'Arrives in '+(active.nextIn + i*EVERY_DAYS)+' days', ''); });
   return html + '</div>';
 }
