@@ -25,6 +25,10 @@ import turtle from './turtle.js';
 import solar from './solar.js';
 import jungle from './jungle.js';
 import bees from './bees.js';
+import ants from './ants.js';
+import aurora from './aurora.js';
+import atlantis from './atlantis.js';
+import galaxy from './galaxy.js';
 
 export const THEMES = [
   farm,
@@ -52,4 +56,8 @@ export const THEMES = [
   solar,
   jungle,
   bees,
+  ants,
+  aurora,
+  atlantis,
+  galaxy,
 ];
