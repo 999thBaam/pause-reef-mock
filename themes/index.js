@@ -18,6 +18,13 @@ import fairy from './fairy.js';
 import railway from './railway.js';
 import pets from './pets.js';
 import oasis from './oasis.js';
+import sky from './sky.js';
+import varanasi from './varanasi.js';
+import book from './book.js';
+import turtle from './turtle.js';
+import solar from './solar.js';
+import jungle from './jungle.js';
+import bees from './bees.js';
 
 export const THEMES = [
   farm,
@@ -38,4 +45,11 @@ export const THEMES = [
   railway,
   pets,
   oasis,
+  sky,
+  varanasi,
+  book,
+  turtle,
+  solar,
+  jungle,
+  bees,
 ];
