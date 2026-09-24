@@ -321,13 +321,38 @@ function pageTileMap(){
 function pageEdgeTex(){
   const W = 64, H = 256, c = document.createElement('canvas'); c.width = W; c.height = H; const g = c.getContext('2d');
   g.fillStyle = '#FFFFFF'; g.fillRect(0, 0, W, H);
-  for (let y=0; y<H; y+=4){ g.fillStyle = `rgba(150,120,80,${.1 + ((y*7) % 5)*.02})`; g.fillRect(0, y, W, 1); }
+  for (let y=0; y<H; y+=4){ g.fillStyle = `rgba(150,112,70,${.2 + ((y*7) % 5)*.035})`; g.fillRect(0, y, W, 1.4); }   // page-edge stripes
   const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(4, 1); return t;
 }
 const PAGE_EDGE = pageEdgeTex();
 const gutterTex = (() => { const c = document.createElement('canvas'); c.width = 128; c.height = 4; const g = c.getContext('2d');
-  const gr = g.createLinearGradient(0, 0, 128, 0); gr.addColorStop(0, 'rgba(90,60,30,0)'); gr.addColorStop(.47, 'rgba(90,60,30,.2)'); gr.addColorStop(.5, 'rgba(90,60,30,.3)'); gr.addColorStop(.53, 'rgba(90,60,30,.2)'); gr.addColorStop(1, 'rgba(90,60,30,0)');
+  const gr = g.createLinearGradient(0, 0, 128, 0); gr.addColorStop(0, 'rgba(90,60,30,0)'); gr.addColorStop(.44, 'rgba(90,60,30,.24)'); gr.addColorStop(.5, 'rgba(70,45,20,.5)'); gr.addColorStop(.56, 'rgba(90,60,30,.24)'); gr.addColorStop(1, 'rgba(90,60,30,0)');
   g.fillStyle = gr; g.fillRect(0, 0, 128, 4); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t; })();
+
+/* the open-book silhouette on the two end faces (front +z, back −z): each page block is a stack of paper layers whose top edge
+   curls up toward the spine and dips into a crease, so from the iso camera the block reads ⌒V⌒ like an open book. Layers
+   alternate paper white / cream so the page edges show as stripes that follow the curve. Only the end faces rise; the tile
+   tops (where pieces stand) stay flat. */
+const END_MATS = [FM(0xFFFBF1, { side:THREE.DoubleSide }), FM(0xE6D3B0, { side:THREE.DoubleSide })];
+const SPINE_W = .035, RISE = .24, BOT = -.6, LAYERS = 9;
+function pageTop(u, h){                                       // u = distance from the spine
+  if (u < .16) return TILE_TOP + RISE*Math.sin(Math.min(1, (u - SPINE_W)/(.16 - SPINE_W))*Math.PI/2);     // curl down into the crease
+  const t = Math.min(1, (u - .16)/(h*.85 - .16)); return TILE_TOP + RISE*(1 - t)*(1 - t);                // sweep down to the fore-edge
+}
+function pageEnds(acc, h){
+  const N = 28;
+  for (const side of [-1, 1]) for (let k=0; k<LAYERS; k++){
+    const lo = u => BOT + (pageTop(u, h) - BOT)*k/LAYERS, hi = u => BOT + (pageTop(u, h) - BOT)*(k + 1)/LAYERS;
+    const sh = new THREE.Shape(), us = []; for (let i=0;i<=N;i++) us.push(SPINE_W + (h + .02 - SPINE_W)*i/N);
+    sh.moveTo(us[0], lo(us[0])); us.forEach(u => sh.lineTo(u, lo(u))); [...us].reverse().forEach(u => sh.lineTo(u, hi(u))); sh.closePath();
+    const geo = new THREE.ExtrudeGeometry(sh, { depth:.03, bevelEnabled:false, curveSegments:1 });
+    if (side < 0) geo.scale(-1, 1, 1);
+    const mat = END_MATS[k % 2];
+    for (const zs of [-1, 1]) acc.add(geo.clone(), mat, at(0, 0, zs > 0 ? h + .005 : -h - .035));
+  }
+  // the crease itself: a dark fold line where the two page blocks meet on each end face
+  for (const zs of [-1, 1]) acc.add(box(SPINE_W*2 + .01, TILE_TOP - BOT + .01, .03), P.clothD, at(0, (TILE_TOP + BOT)/2, zs > 0 ? h + .02 : -h - .02));
+}
 
 /* env: the page block becomes a book — page-edge sides, a cloth cover underneath with gold tooling, a gutter crease, a ribbon */
 function buildEnv(){
@@ -342,8 +367,11 @@ function buildEnv(){
   // ribbon bookmark: lies across the top page, runs down the front face, ends in a V
   const rx = .72;
   a.add(box(.12, .006, .9), P.ribbon, at(rx, TILE_TOP + .004, h - .45));
-  a.add(box(.12, .7, .006), P.ribbon, at(rx, TILE_TOP - .35, h + .03));
-  a.add(new THREE.CylinderGeometry(.06, .06, .15, 3, 1).rotateZ(Math.PI/2).scale(1, 1, .05), P.ribbon, at(rx, -.7, h + .03, 0, 1, 1, 1, 0, -Math.PI/2));
+  const lip = pageTop(rx, h) + .004;                                   // the ribbon climbs over the curled page end, then hangs down
+  a.add(box(.12, .006, .06), P.ribbon, at(rx, lip, h + .02));
+  a.add(box(.12, lip + .64, .006), P.ribbon, at(rx, (lip - .64)/2, h + .045));
+  a.add(new THREE.CylinderGeometry(.06, .06, .15, 3, 1).rotateZ(Math.PI/2).scale(1, 1, .05), P.ribbon, at(rx, -.7, h + .045, 0, 1, 1, 1, 0, -Math.PI/2));
+  pageEnds(a, h);
   a.into(env);
   env.traverse(o => { if (o.isMesh) { o.receiveShadow = true; o.castShadow = false; } });
   const gut = new THREE.Mesh(new THREE.PlaneGeometry(.55, L).rotateX(-Math.PI/2), new THREE.MeshBasicMaterial({ map:gutterTex, transparent:true, depthWrite:false }));

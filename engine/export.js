@@ -6,7 +6,7 @@
    Sprites are pixel-snapped to the land's hero frame: drawing each PNG at `pos` (top-left, hero px @3×) rebuilds the scene. */
 import * as THREE from 'three';
 import * as SkeletonUtils from 'three/addons/utils/SkeletonUtils.js';
-import { RIG, CAM_DIR, SUN_OFF, SHADOW_R, U, world as WORLD } from './scene.js';
+import { RIG, rigFor, CAM_DIR, SUN_OFF, SHADOW_R, U, world as WORLD } from './scene.js';
 import { S, TH, V, placed, setPlaced, RULES } from './state.js';
 import { GRID, OFF, TILE_TOP, cellPos, ringOf, slotRing, footprint, edgeCentre, isEdge } from './grid.js';
 import { MOTION } from './motion.js';
@@ -45,16 +45,16 @@ const landOut = l => ({ size:l.size, ring:l.ring, complete:l.complete, view:{ l:
 
 /* ───────────── SPEC ───────────── */
 function lightsSpec(api){
-  const sd = SUN_OFF.clone().normalize();
+  const sd = SUN_OFF.clone().normalize(), D = rigFor(TH(), false), N = rigFor(TH(), true);
   return {
-    day:{ hemisphere:{ sky:hex(RIG.hemi.sky), ground:hex(RIG.hemi.ground), intensity:RIG.hemi.intensity },
-          sun:{ color:hex(RIG.sun.color), intensity:RIG.sun.intensity, direction:[r3(sd.x), r3(sd.y), r3(sd.z)], distance:RIG.sun.dist,
+    day:{ hemisphere:{ sky:hex(D.hemi.sky), ground:hex(D.hemi.ground), intensity:D.hemi.intensity },
+          sun:{ color:hex(D.sun.color), intensity:D.sun.intensity, direction:[r3(sd.x), r3(sd.y), r3(sd.z)], distance:RIG.sun.dist,
                 shadow:{ mapSize:RIG.sun.shadowMap, bias:RIG.sun.bias, normalBias:RIG.sun.normalBias, type:'PCF soft', orthoHalfExtent:r3(SHADOW_R), near:1, far:70 } },
-          fill:{ color:hex(RIG.fill.color), intensity:RIG.fill.intensity, position:RIG.fill.pos } },
-    night:{ hemisphere:{ sky:hex(RIG.night.hemi.sky), ground:hex(RIG.night.hemi.ground), intensity:RIG.night.hemi.intensity },
-            sun:{ color:hex(RIG.night.sun.color), intensity:RIG.night.sun.intensity }, fill:{ intensity:RIG.night.fill.intensity },
+          fill:{ color:hex(D.fill.color), intensity:D.fill.intensity, position:RIG.fill.pos } },
+    night:{ hemisphere:{ sky:hex(N.hemi.sky), ground:hex(N.hemi.ground), intensity:N.hemi.intensity },
+            sun:{ color:hex(N.sun.color), intensity:N.sun.intensity }, fill:{ color:hex(N.fill.color), intensity:N.fill.intensity },
             lamps:'warm point light (#FFA84A, 2.2 on 2×2 / 1.4 on 1×1, range 2.6) + glow in front of up to 6 placed lamp pieces (theme.nightLamp)', fireflies:24 },
-    toneMapping:RIG.toneMapping, exposure:RIG.exposure, outputColorSpace:'sRGB',
+    toneMapping:RIG.toneMapping, exposure:D.exposure, nightExposure:N.exposure, mood:TH().mood || null, outputColorSpace:'sRGB',
     ghost:api.ghostSpec,
     contactShadow:'radial dark plane under model pieces, opacity .5, colour #1f2a12, size = footprint bbox × 1.05 + .2 (≤ 2.2)'
   };
@@ -104,15 +104,16 @@ async function restoreState(api, k){ S.forceRing = k.forceRing; S.night = k.nigh
 
 function makeRig(api){
   const xr = new THREE.WebGLRenderer({ antialias:true, alpha:true, preserveDrawingBuffer:true });
-  xr.setPixelRatio(1); xr.outputColorSpace = THREE.SRGBColorSpace; xr.toneMapping = api.toneMapping; xr.toneMappingExposure = api.exposure;
+  const R = rigFor(TH(), false);                             // the theme's day rig (shared RIG unless theme.mood / theme.lights)
+  xr.setPixelRatio(1); xr.outputColorSpace = THREE.SRGBColorSpace; xr.toneMapping = api.toneMapping; xr.toneMappingExposure = new URLSearchParams(location.search).get('exp') ? api.exposure : R.exposure;
   xr.shadowMap.enabled = true; xr.shadowMap.type = THREE.PCFSoftShadowMap; xr.setClearColor(0, 0);
   const xs = new THREE.Scene();
-  const hemi = new THREE.HemisphereLight(RIG.hemi.sky, RIG.hemi.ground, RIG.hemi.intensity);
-  const sun = new THREE.DirectionalLight(RIG.sun.color, RIG.sun.intensity);
+  const hemi = new THREE.HemisphereLight(R.hemi.sky, R.hemi.ground, R.hemi.intensity);
+  const sun = new THREE.DirectionalLight(R.sun.color, R.sun.intensity);
   sun.castShadow = true; sun.shadow.mapSize.set(RIG.sun.shadowMap, RIG.sun.shadowMap); sun.shadow.bias = RIG.sun.bias; sun.shadow.normalBias = RIG.sun.normalBias;
   sun.position.copy(SUN_OFF).normalize().multiplyScalar(RIG.sun.dist); sun.target.position.set(0,0,0);
   const sc = sun.shadow.camera; sc.left=-SHADOW_R; sc.right=SHADOW_R; sc.top=SHADOW_R; sc.bottom=-SHADOW_R; sc.near=1; sc.far=70; sc.updateProjectionMatrix();
-  const fill = new THREE.DirectionalLight(RIG.fill.color, RIG.fill.intensity); fill.position.set(...RIG.fill.pos); fill.target.position.set(0,0,0);
+  const fill = new THREE.DirectionalLight(R.fill.color, R.fill.intensity); fill.position.set(...RIG.fill.pos); fill.target.position.set(0,0,0);
   xs.add(hemi, sun, fill, sun.target, fill.target);
   // receiver for the ground-shadow layer (hidden for normal sprites; never casts)
   const ground = new THREE.Mesh(new THREE.PlaneGeometry(40, 40).rotateX(-Math.PI/2), new THREE.MeshStandardMaterial({ color:0x9A9A9A, roughness:1 }));

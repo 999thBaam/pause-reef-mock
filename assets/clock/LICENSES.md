@@ -1,0 +1,3 @@
+# clock — asset licences
+
+No third-party assets. Every piece (clockmaker's shop, cuckoo house, music box, wind-up house, orrery, spring works, water clock, brass fountain, hourglass, cog pond, cog pines, pendulum trees, armillary trees, gear towers, cog ladders, paths, brass rails, the great clock tower), the block trim with its turning gears (env), the parquet texture and the residents (clockwork birds, wind-up robins) are procedural three.js geometry and canvas textures written in `themes/clock.js`. Clock faces carry tick marks only, no numerals or text. `album.jpg` is a render of the theme itself (album-thumbs.sh). The kit id `a` (Quaternius Stylized Nature MegaKit, CC0, see assets/LICENSES.md) is declared as the primary kit but no model from it is placed.

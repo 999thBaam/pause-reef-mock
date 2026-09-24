@@ -460,6 +460,8 @@ export default {
     special: { label:'the sunken palace',       tag:'Special' }
   },
   slots:SLOTS, order:FARM_ORDER,
+  // underwater rig: cool sea-green sky light, a softer blue-white key from the surface, teal fill, so the domes glow against deep water
+  lights:{ hemi:{ sky:0xBDEBFF, ground:0x1F4E6E, intensity:1.45 }, sun:{ color:0xDDF4FF, intensity:1.9 }, fill:{ color:0x7CD4FF, intensity:.65 } },
   ground:{ tile:TILE, tileMap },
   icon:ICON, silhouette:SIL,
   album:{ image:'assets/atlantis/album.jpg', liveBg:'radial-gradient(80% 70% at 50% 50%,#FFFFFF,#DCE7F6)' },

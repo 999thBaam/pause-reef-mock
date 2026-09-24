@@ -516,6 +516,7 @@ export default {
   ground:{ tile:TILE, tileMap },
   icon:'<svg viewBox="0 0 24 24" width="19" height="19"><path d="M2 9c3-5 6 1 10-3s7-2 10 1v5c-3-3-6-3-10 1S5 10 2 14z" fill="#5FE3B0" opacity=".9"/><path d="M4 7.5c3-3 6 0 9-2.5s5-1.2 7 .3" stroke="#B592FF" stroke-width="1.3" fill="none" stroke-linecap="round"/><path d="M6 21v-4.5l3.5-3 3.5 3V21z" fill="#A9392F"/><rect x="8.4" y="17.4" width="2.2" height="2.2" fill="#FFC45A"/><path d="M14 21h8v-1.2c-2-1.6-6-1.6-8 0z" fill="#EAF0FB"/></svg>',
   silhouette:'<g fill="currentColor"><path d="M4 50c20-26 36 6 60-12s40-14 60 2v16c-20-14-38-14-60 4S22 44 4 62z" opacity=".55"/><path d="M14 118V84l24-20 24 20v34z"/><path d="M82 118V66h24v52z"/><path d="M78 66c0-14 8-22 16-22s16 8 16 22z"/><path d="M94 44 116 26l3 4-21 17z"/><rect x="30" y="94" width="14" height="12" fill="#fff" opacity=".55"/></g>',
+  mood:'night',                                 // blue-hour rig + lit lamps in the day view (engine/scene.js MOODS)
   album:{ image:'assets/aurora/album.jpg', liveBg:'radial-gradient(80% 70% at 50% 45%,#2A3A74,#141B3A)' },
   ghost:{ color:'#5A6A9E', opacity:.4, emissive:.08, dash:'#6C7BAE', dashOpacity:.72, night:{ opacity:.3, emissive:.22, dashOpacity:.5 } },
   css:'.phone[data-theme="aurora"] .card .art{background:radial-gradient(90% 80% at 50% 34%,#3A4C8A 0,#26336A 58%,#18204A 100%)}' +

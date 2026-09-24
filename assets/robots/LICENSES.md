@@ -1,0 +1,3 @@
+# robots — asset licences
+
+No third-party assets. Every piece (workshop, silo, control tower, garage, dome lab, parts shop, bubble tank, wind turbine, breeze fan, cooling pool, gear/lamp trees, spring bushes, robot assembly pads, paths, pipe railings, the giant robot), the block trim (env), the floor texture and the residents (little bots, hover drones) are procedural three.js geometry and canvas textures written in `themes/robots.js`. `album.jpg` is a render of the theme itself (album-thumbs.sh). The kit id `a` (Quaternius Stylized Nature MegaKit, CC0, see assets/LICENSES.md) is declared as the primary kit but no model from it is placed.

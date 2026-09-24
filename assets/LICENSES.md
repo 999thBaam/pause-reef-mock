@@ -320,9 +320,260 @@ No new 3D files. Everything in this theme is either procedural (own work) or reu
 #### Not used
 - Camels on Poly Pizza (https://poly.pizza/search/camel): five are "Poly by Google" (CC-BY 3.0) and one by "jeremy" (also attribution-licensed). None are CC0, so the camels are built in code instead.
 
+## Merged from `varanasi/LICENSES.md`: Ghat temple theme (`themes.html?theme=varanasi`; the per-theme file stays next to its assets)
+
+### varanasi — asset licences
+
+No new asset files. Every Varanasi piece (ghat steps, river, temples, havelis, pathshala, aarti platform, boats, kund, hand pump,
+kites, ghat umbrellas, lanes, flower stall, bell ropes, diya trails, marigold beds, tulsi, banana, rowing boats, river dolphins,
+pigeons) is procedural three.js geometry in `themes/varanasi.js`. album.jpg is a render of the theme.
+
+Reused shared CC0 kits (already listed in assets/LICENSES.md):
+
+| folder | what | source | licence |
+|---|---|---|---|
+| assets/kit-a | CommonTree_1/2/3/5 (peepal, neem, banyan) | Quaternius Stylized Nature MegaKit | CC0 |
+| assets/farm | Grass_1/2 tufts | Quaternius Farm / Ultimate Crops | CC0 |
+
+## Merged from `sky/LICENSES.md`: Windmill hall theme (`themes.html?theme=sky`; the per-theme file stays next to its assets)
+
+### sky (Sky islands) — asset licences
+
+No new asset files. Everything in `themes/sky.js` is procedural three.js geometry, except:
+
+| what | source | licence | checked |
+|---|---|---|---|
+| sky oaks (CommonTree_1/2), sky pines (Pine_1/3), meadow grass/clover/flower tufts | shared kit `assets/kit-a/kit-a.glb` = Quaternius Stylized Nature MegaKit | CC0 | already recorded in `assets/LICENSES.md` (kit-a row) |
+
+`album.jpg` is a render of this theme (album-thumbs.sh).
+
+## Merged from `cricket/LICENSES.md`: Stand theme (`themes.html?theme=cricket`; the per-theme file stays next to its assets)
+
+### cricket — asset licences
+
+No new asset files. Everything is procedural three.js in `themes/cricket.js`; the oak/pine trees reuse the shared kit `a` (Quaternius Stylized Nature MegaKit, CC0, see `assets/LICENSES.md`). `album.jpg` is a render of this theme. No team names, logos, sponsor text or real players.
+
+## Merged from `globe/LICENSES.md`: Carousel theme (`themes.html?theme=globe`; the per-theme file stays next to its assets)
+
+### assets/globe
+
+No third-party assets. Every piece, the globe, base, snow and residents are procedural three.js geometry in `themes/globe.js`. `album.jpg` is rendered from the theme itself (`bash album-thumbs.sh globe`).
+
+## Merged from `phoenix/LICENSES.md`: Seed dome theme (`themes.html?theme=phoenix`; the per-theme file stays next to its assets)
+
+### phoenix: asset licences
+No new model files. The theme reuses assets already in this repo:
+| what | file | source | licence |
+|---|---|---|---|
+| trees, grass, clover, ferns, flowers, bushes | assets/kit-a/kit-a.glb | Quaternius Stylized Nature MegaKit (quaternius.com) | CC0 (see assets/LICENSES.md) |
+| coconut palms | assets/dino/palms.glb | Quaternius Ultimate Stylized Nature "Palm Trees" | CC0 (see assets/dino/LICENSES.md) |
+Everything else (basalt columns, huts, seed dome, lookout, bird poles, rain clouds, pools, lava fields, phoenix spring, phoenix, parrots, hatchlings) is procedural three.js geometry in themes/phoenix.js.
+album.jpg = rendered from the theme by album-thumbs.sh.
+
+## Storybook theme (`themes.html?theme=book`; no per-theme file: nothing third-party)
+
+| folder | what | source | licence | checked |
+|---|---|---|---|---|
+| assets/book | album.jpg | rendered from this theme (album-thumbs.sh) | own work | — |
+
+Every piece, the page block, cover, ribbon, page-end curls and origami residents are procedural three.js (themes/book.js). Kit `a` is listed only so the primary-kit lookup resolves; nothing from it is drawn.
+
+## Merged from `turtle/LICENSES.md`: Conch house theme (`themes.html?theme=turtle`; the per-theme file stays next to its assets)
+
+### turtle (Turtle isle) — asset licences
+
+No new model files. The turtle (shell, head, flippers, tail), the sea, the conch house, the lighthouse, the shell gardens,
+pools, paths, driftwood fences and the hatchlings are procedural three.js geometry in `themes/turtle.js`. Reused shared kits:
+
+| what | file | source | licence | checked |
+|---|---|---|---|---|
+| palms, thatched huts, row boats, barrels, rocks, grass | `assets/pirate/pirate-kit.glb` | Kenney Pirate Kit (kenney.nl) | CC0 | recorded in `assets/LICENSES.md` + `assets/pirate/Kenney-PirateKit-License.txt` |
+| cottages, lookout tower, lanterns | `assets/village/village.glb` | KayKit Medieval Hexagon (kaylousberg.itch.io) | CC0 | recorded in `assets/LICENSES.md` + `assets/village/KayKit-MedievalHexagon-License.txt` |
+| shade trees, flowers, bushes, meadow tufts | `assets/kit-a/kit-a.glb` | Quaternius Stylized Nature MegaKit | CC0 | recorded in `assets/LICENSES.md` (kit-a row) |
+| blue tangs, clownfish, snapper, manta | `assets/reef/Fish1-3.glb`, `Manta.glb` | Quaternius Animated Fish | CC0 | recorded in `assets/LICENSES.md` + `assets/reef/Quaternius-AnimatedFish-License.txt` |
+
+`album.jpg` is a render of this theme (album-thumbs.sh).
+
+## Merged from `candy/LICENSES.md`: Layer-cake house theme (`themes.html?theme=candy`; the per-theme file stays next to its assets)
+
+### candy — asset licences
+
+No third-party assets. Every piece, the cake block (env), the ground texture and the residents (gummy bears, bees) are procedural three.js geometry and canvas textures written in `themes/candy.js`. `album.jpg` is a render of the theme itself (album-thumbs.sh). The kit id `a` (Quaternius Stylized Nature MegaKit, CC0, see assets/LICENSES.md) is declared as the primary kit but no model from it is placed.
+
+## Merged from `dream/LICENSES.md`: Upside-down manor theme (`themes.html?theme=dream`; the per-theme file stays next to its assets)
+
+### assets/dream — licences
+
+No external assets. Every Dreamland piece, the cloud sea, the residents (dream sheep, sleepy stars) and the ground texture are
+procedural three.js built in `themes/dream.js` (CC0-equivalent: our own code). `album.jpg` is a render of the theme itself
+(`bash album-thumbs.sh dream`). The shared Quaternius kit `a` is listed in `kits` (engine default) but no model from it is used.
+
+## Merged from `solar/LICENSES.md`: Home planet theme (`themes.html?theme=solar`; the per-theme file stays next to its assets)
+
+### assets/solar — licences
+
+| what | source | licence | checked |
+|---|---|---|---|
+| (no new files) every planet, moon base, station, dish, launch tower, the Sun, rocket, comets, satellites, tiles and orbit lines are procedural three.js geometry + canvas textures written for this mock | — | own work | — |
+| home-planet and moon-cottage flowers (`Flower_3_Group`, `Flower_4_Group`) reused from the shared kit `assets/kit-a/` (Quaternius Stylized Nature MegaKit) | quaternius.com | CC0 | already recorded in assets/LICENSES.md |
+| `album.jpg` rendered from the theme by `album-thumbs.sh` | — | own work | — |
+
+## Merged from `kerala/LICENSES.md`: Tharavad theme (`themes.html?theme=kerala`; the per-theme file stays next to its assets)
+
+### kerala — asset licences
+
+No new third-party asset files. Everything in `themes/kerala.js` is procedural three.js geometry and canvas textures written for this mock: the canal, houses, houseboats, nets, snake boat, paddy, palms, elephants, kingfishers and ducks.
+
+Reused shared kits (already in the repo, CC0, see `assets/LICENSES.md`):
+- `assets/kit-a/kit-a.glb`: Quaternius Stylized Nature MegaKit (CC0). CommonTree_1 and CommonTree_2 are used for the mango and jackfruit trees.
+- `assets/farm/farm.glb`: Quaternius farm kit (CC0). Grass_1 and Grass_2 are used for the decor tufts.
+
+`album.jpg` is rendered from this theme by `album-thumbs.sh`.
+
+## Merged from `ladakh/LICENSES.md`: Hillside houses theme (`themes.html?theme=ladakh`; the per-theme file stays next to its assets)
+
+### ladakh — assets
+
+No new asset files. Every piece, resident and ambient bird is procedural three.js geometry in `themes/ladakh.js`.
+
+| folder | what | source | licence | checked |
+|---|---|---|---|---|
+| assets/kit-a (shared) | Rock_Medium_1–3, Pebble_Round_1–3 (decor, pond rims) | Quaternius Stylized Nature MegaKit | CC0 | already recorded in assets/LICENSES.md |
+| assets/ladakh/album.jpg | album card art | rendered from the theme (`bash album-thumbs.sh ladakh`) | own render | — |
+
+## Merged from `mumbai/LICENSES.md`: Chawl courtyard theme (`themes.html?theme=mumbai`; the per-theme file stays next to its assets)
+
+### mumbai — asset licences
+
+No new asset files. Every Mumbai piece (chawl courtyard, chawl rows, art-deco blocks, Irani café, old library, sea arch,
+chai tapri, umbrella stall, snack cart, taxi, sea-wall lamps, train viaduct, fountain, water pots, coconut cart, rain barrel,
+street tap, gulmohar, coconut palms, puddles + paper boats, the sea / tetrapods / foam env, rain bursts, local train, crows,
+rainbow) is procedural three.js geometry in `themes/mumbai.js`. The sea arch is a generic design (no text, crest or replica
+detailing). album.jpg is a render of the theme.
+
+Reused shared CC0 kits (already listed in assets/LICENSES.md):
+
+| folder | what | source | licence |
+|---|---|---|---|
+| assets/kit-a | CommonTree_1 (rain tree), CommonTree_5 (banyan) | Quaternius Stylized Nature MegaKit | CC0 |
+| assets/farm | Grass_1/2 tufts | Quaternius Farm / Ultimate Crops | CC0 |
+
+## Merged from `jungle/LICENSES.md`: Vine temple theme (`themes.html?theme=jungle`; the per-theme file stays next to its assets)
+
+### Jungle kingdom theme: asset licences (checked 2026-09-24)
+
+No new 3D files. Everything in this theme is either procedural (own work) or reuses CC0 kits already in the repo.
+
+| File / source | What | Licence, and where I checked it |
+|---|---|---|
+| `assets/dino/palms.glb` (reused, not copied) | Palms: **Quaternius Ultimate Stylized Nature "Palm Trees"** (PalmTree_3, PalmTree_4) | CC0 1.0, see `assets/dino/LICENSES.md` |
+| `assets/kit-a/kit-a.glb` (reused) | Ferns (Fern_1), big-leaf plants (Plant_1_Big), tall grass, mushrooms, rocks: **Quaternius Stylized Nature MegaKit** | CC0, see the shared `assets/LICENSES.md` |
+| `album.jpg` | Crop of this page's own render of the jungle at 40/40 (`bash album-thumbs.sh jungle`) | own render |
+| (procedural, `themes/jungle.js`) | Vine temple, ruined tower, tree house, thatched hut, stone archway, bamboo lookout, waterfall, lily pool, bamboo spout, lotus pond, rainforest / fig trees, banana groves, bamboo clumps, restoring shrines and stupas, trail props, bamboo fence, the giant banyan, tiger, sloth bear, monkeys, peacocks, fireflies, tiger-stripe / thatch / leaf-litter canvas textures | own work |
+
+#### Not used
+- No CC0 tiger, sloth bear, langur or peacock model was found in the CC0 kits already in use (Quaternius / KayKit / Kenney), so the residents are built in code.
+
+## Merged from `robots/LICENSES.md`: Main workshop theme (`themes.html?theme=robots`; the per-theme file stays next to its assets)
+
+### robots — asset licences
+
+No third-party assets. Every piece (workshop, silo, control tower, garage, dome lab, parts shop, bubble tank, wind turbine, breeze fan, cooling pool, gear/lamp trees, spring bushes, robot assembly pads, paths, pipe railings, the giant robot), the block trim (env), the floor texture and the residents (little bots, hover drones) are procedural three.js geometry and canvas textures written in `themes/robots.js`. `album.jpg` is a render of the theme itself (album-thumbs.sh). The kit id `a` (Quaternius Stylized Nature MegaKit, CC0, see assets/LICENSES.md) is declared as the primary kit but no model from it is placed.
+
+## Merged from `toys/LICENSES.md`: Dollhouse theme (`themes.html?theme=toys`; the per-theme file stays next to its assets)
+
+### assets/toys — licences
+
+No third-party assets. Every toy-room piece, resident and texture (floorboards, gingham, the crayon drawing) is procedural
+three.js in `themes/toys.js`, drawn at load. `album.jpg` is a render of the theme itself (`bash album-thumbs.sh toys`).
+Only shared engine code/textures are used. No brands, no letters or text on any toy.
+
+## Merged from `bees/LICENSES.md`: Honeycomb hall theme (`themes.html?theme=bees`; the per-theme file stays next to its assets)
+
+### Bee kingdom theme: asset licences (checked 2026-09-24)
+
+No new 3D files. Everything in this theme is procedural (own work) or reuses a CC0 kit already in the repo.
+
+| File / source | What | Licence, and where I checked it |
+|---|---|---|
+| `assets/kit-a/kit-a.glb` (reused, not copied) | Clover (Clover_1), flower groups (Flower_4_Group), flowering bush (Bush_Common_Flowers), short grass: **Quaternius Stylized Nature MegaKit** | CC0, see the shared `assets/LICENSES.md` |
+| `album.jpg` | Crop of this page's own render of the hive at 40/40 (`bash album-thumbs.sh bees`) | own render |
+| (procedural, `themes/bees.js`) | Honeycomb hall, wax tower, box hive, straw skep, beekeeper's hut, honey stall, bee bath, rain barrel, dew basin, lily pond, blossom / linden trees, sunflowers, hollyhocks, lavender, filling honey jars, capping comb frames, hex pavers / lantern / bench / wax steps, picket fence, the queen's hive, bees, honey bear, bee swarms, queen bee, honeycomb tile canvas texture | own work |
+
+#### Not used
+- No CC0 bee, beehive or bear model was found in the CC0 kits already in use (Quaternius / KayKit / Kenney), so these are built in code.
+
+## Merged from `ants/LICENSES.md`: Colony hall theme (`themes.html?theme=ants`; the per-theme file stays next to its assets)
+
+### assets/ants — licences
+
+No new third-party files. The Ant farm theme (`themes/ants.js`) is procedural three.js geometry and canvas textures
+written for this mock, plus tufts / flowers / fern / mushroom from the shared **Quaternius Stylized Nature MegaKit**
+(`assets/kit-a/kit-a.glb`, CC0, already listed in `assets/LICENSES.md`).
+
+| file | what | source | licence |
+|---|---|---|---|
+| album.jpg | album card art, rendered from this mock by `album-thumbs.sh ants` | own render | n/a (ours) |
+
+## Merged from `aurora/LICENSES.md`: Longhouse theme (`themes.html?theme=aurora`; the per-theme file stays next to its assets)
+
+### aurora — asset licences
+
+No new third-party assets. Every piece, the aurora ribbons, stars, snowy owl and textures are procedural (themes/aurora.js).
+
+| folder | what | source | licence | checked |
+|---|---|---|---|---|
+| assets/animals | Stag.glb, Deer.glb, Fox.glb (recoloured at runtime as reindeer, reindeer calf, arctic fox) | Quaternius Ultimate Animated Animals (already in the shared folder) | CC0 | see shared assets/LICENSES.md |
+| assets/aurora | album.jpg | rendered from this theme (album-thumbs.sh) | own work | — |
+
+## Merged from `atlantis/LICENSES.md`: Great dome theme (`themes.html?theme=atlantis`; the per-theme file stays next to its assets)
+
+### Atlantis theme — assets (checked 2026-09-24)
+
+| file | what | source | licence |
+|---|---|---|---|
+| (none new) | every city piece, coral tower, glow tree, submarine, whale, jellyfish, tile and water is procedural three.js in `themes/atlantis.js` | own code | n/a |
+| `../reef/Fish1.glb`, `Fish2.glb`, `Dolphin.glb` (reused, not copied) | Quaternius Animated Fish Pack | https://quaternius.com/packs/animatedfish.html | CC0 1.0 (see `Quaternius-AnimatedFish-License.txt`, copied here; already verified in the reef row of `assets/LICENSES.md`) |
+| `album.jpg` | own render of this theme (`album-thumbs.sh atlantis`) | own render | CC0 (derivative) |
+
+## Merged from `galaxy/LICENSES.md`: Garden world theme (`themes.html?theme=galaxy`; the per-theme file stays next to its assets)
+
+### galaxy — assets
+
+No third-party assets. Every galaxy piece, resident (comets, space whales, star-minnows), tile texture, nebula shader and the
+spiral-galaxy texture is procedural three.js / canvas code in `themes/galaxy.js` (original work, no licence constraints).
+The theme lists the shared MegaKit (`kit a`, Quaternius, CC0 — see assets/LICENSES.md) in `kits` but builds nothing from it.
+`album.jpg` is a render of the theme (album-thumbs.sh).
+
+## Merged from `panda/LICENSES.md`: Keepers’ lodge theme (`themes.html?theme=panda`; the per-theme file stays next to its assets)
+
+### assets/panda — licences
+
+No new third-party files. Everything in the panda sanctuary is procedural three.js (themes/panda.js), except:
+
+| what | source | licence | checked |
+|---|---|---|---|
+| Mountain pines (Pine_1/3/5), dove-tree canopies (CommonTree_1/2/3), ferns and grass tufts | shared kit `assets/kit-a/kit-a.glb` = Quaternius Stylized Nature MegaKit (quaternius.com) | CC0 1.0 | already listed in assets/LICENSES.md |
+| album.jpg | rendered from this theme by album-thumbs.sh | own render | — |
+
+## Merged from `mars/LICENSES.md`: Colony hub theme (`themes.html?theme=mars`; the per-theme file stays next to its assets)
+
+### mars (Mars colony, season 40)
+
+No third-party assets. Every piece, the ground texture, the mesas, the dust devils and the residents (lander, rovers, drones)
+are procedural three.js geometry and canvas textures written for this theme in `themes/mars.js`.
+`album.jpg` is a render of the theme (album-thumbs.sh). Kit `a` (Quaternius Stylized Nature MegaKit, CC0) is listed as the
+primary kit only because the contract requires one; no model from it is placed.
+
+## Merged from `clock/LICENSES.md`: Clockmaker’s shop theme (`themes.html?theme=clock`; the per-theme file stays next to its assets)
+
+### clock — asset licences
+
+No third-party assets. Every piece (clockmaker's shop, cuckoo house, music box, wind-up house, orrery, spring works, water clock, brass fountain, hourglass, cog pond, cog pines, pendulum trees, armillary trees, gear towers, cog ladders, paths, brass rails, the great clock tower), the block trim with its turning gears (env), the parquet texture and the residents (clockwork birds, wind-up robins) are procedural three.js geometry and canvas textures written in `themes/clock.js`. Clock faces carry tick marks only, no numerals or text. `album.jpg` is a render of the theme itself (album-thumbs.sh). The kit id `a` (Quaternius Stylized Nature MegaKit, CC0, see assets/LICENSES.md) is declared as the primary kit but no model from it is placed.
+
 ## Album card art (checked 2026-09-24)
 
 | Folder | What | Source | Licence |
 |---|---|---|---|
-| `<id>/album.jpg` (all 18 themes: farm, forest, reef, village, pirate, space, dino, winter, halloween, town, diwali, zen, camp, castle, railway, fairy, pets, oasis) | the album card thumbnail: this page's own render of the theme at its album state (`themes.html?albumsnap=1&theme=<id>`, saved by `album-thumbs.sh`) | own render of the CC0 models above | CC0 (derivative) |
+| `<id>/album.jpg` (all 42 themes, seasons 1–42: farm, forest, reef, village, pirate, space, dino, winter, halloween, town, diwali, zen, camp, castle, railway, fairy, pets, oasis, varanasi, sky, cricket, globe, phoenix, book, turtle, candy, dream, solar, kerala, ladakh, mumbai, jungle, robots, toys, bees, ants, aurora, atlantis, galaxy, panda, mars, clock) | the album card thumbnail: this page's own render of the theme at its album state (`themes.html?albumsnap=1&theme=<id>`, saved by `album-thumbs.sh`) | own render of the CC0 models above | CC0 (derivative) |
 | `album/farm.jpg`, `album/forest.jpg` | older hand-cropped thumbnails, superseded by `farm/album.jpg` / `forest/album.jpg`, no longer referenced | own render | CC0 (derivative) |

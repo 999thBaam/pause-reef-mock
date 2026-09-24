@@ -29,6 +29,19 @@ import ants from './ants.js';
 import aurora from './aurora.js';
 import atlantis from './atlantis.js';
 import galaxy from './galaxy.js';
+import cricket from './cricket.js';
+import phoenix from './phoenix.js';
+import globe from './globe.js';
+import candy from './candy.js';
+import dream from './dream.js';
+import ladakh from './ladakh.js';
+import kerala from './kerala.js';
+import mumbai from './mumbai.js';
+import robots from './robots.js';
+import toys from './toys.js';
+import panda from './panda.js';
+import mars from './mars.js';
+import clock from './clock.js';
 
 export const THEMES = [
   farm,
@@ -60,4 +73,17 @@ export const THEMES = [
   aurora,
   atlantis,
   galaxy,
+  cricket,
+  phoenix,
+  globe,
+  candy,
+  dream,
+  ladakh,
+  kerala,
+  mumbai,
+  robots,
+  toys,
+  panda,
+  mars,
+  clock,
 ];

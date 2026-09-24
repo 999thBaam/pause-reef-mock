@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pause Themes</title>
+<link rel="icon" href="data:,">
 <!--
   Home "Themes" — build a scene piece by piece. Themes are modules: themes/<id>.js registered in themes/index.js (contract: themes/README.md);
   the shared engine is this page + engine/*.js. Brief: ./BRIEF-THEMES.md (2026-09-23). Built on the garden mock (index.html):
@@ -268,6 +269,8 @@ svg{display:block}
 .hud button.b.on{background:var(--mint);border-color:var(--mint);color:#0B2E20}
 .hud button.go{background:#FFD166;border-color:#FFD166;color:#3A2A00}
 .hud input[type=range]{width:100%;accent-color:var(--mint);margin:2px 0}
+.hud select.sel{width:100%;background:#212A34;border:1px solid #303B47;border-radius:8px;padding:6px 8px;font:inherit;font-size:12px;font-weight:700;color:#EAF1F7}
+.hud select.sel optgroup{color:#7D8B99}.hud select.sel option{color:#EAF1F7;background:#212A34}
 .hud .val{float:right;font-weight:800;color:#EAF1F7}
 .hud .note{margin-top:10px;font-size:11px;line-height:1.4;color:#7D8B99}
 .hudtoggle{position:fixed;left:18px;top:18px;z-index:51;width:44px;height:44px;border-radius:14px;
@@ -411,7 +414,7 @@ body.rm .vchip.fresh{animation:none}
 <button class="hudtoggle" id="hudToggle" aria-label="Show mock controls">&#9881;</button>
 <aside class="hud" id="hud" aria-label="Mock controls">
   <h4>THEME</h4>
-  <div class="row" id="hudTheme"></div>
+  <select id="hudTheme" class="sel" aria-label="Theme"></select>
   <h4>GROWTH</h4>
   <div class="row" id="hudGrow">
     <button class="b" data-grow="a">A &middot; grows</button>
@@ -531,7 +534,7 @@ import * as THREE from 'three';
 import * as SkeletonUtils from 'three/addons/utils/SkeletonUtils.js';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import { RULES, S, REG, LIST, registerThemes, TH, V, setV, placed, setPlaced, hooks, AMBIENT, slotById, cropStage } from './engine/state.js';
-import { QS, rngFrom, RIG, scene, CAM_DIR, hemi, sun, fill, SUN_OFF, SHADOW_R, world, fx, U, TEX, GRASS_TILE, grassTileMap } from './engine/scene.js';
+import { QS, rngFrom, RIG, rigFor, scene, CAM_DIR, hemi, sun, fill, SUN_OFF, SHADOW_R, world, fx, U, TEX, GRASS_TILE, grassTileMap } from './engine/scene.js';
 import { GRID, OFF, TILE_TOP, cellPos, ringOf, slotRing, isEdge, footprint } from './engine/grid.js';
 import { KITS, KITCACHE, registerKits, loadKit, loadAnimal, modelBox } from './engine/kit.js';
 import { MOTION, anims, tween, spring, sparkle, dust, confetti } from './engine/motion.js';
@@ -795,12 +798,13 @@ const nightFx = new THREE.Group(); scene.add(nightFx);
 const defaultLamp = s => s.cat==='building' || s.cat==='special';
 const NIGHT_REAL_LIGHTS = 6, nightPoolGeo = new THREE.PlaneGeometry(1, 1).rotateX(-Math.PI/2);
 function applyNight(){
-  const n = S.night, N = RIG.night;
-  hemi.color.set(n ? N.hemi.sky : RIG.hemi.sky); hemi.groundColor.set(n ? N.hemi.ground : RIG.hemi.ground); hemi.intensity = n ? N.hemi.intensity : RIG.hemi.intensity;
-  sun.color.set(n ? N.sun.color : RIG.sun.color); sun.intensity = n ? N.sun.intensity : RIG.sun.intensity; fill.intensity = n ? N.fill.intensity : RIG.fill.intensity;
+  const n = S.night, R = rigFor(TH(), n);            // shared RIG, overridden by the theme's mood / lights (engine/scene.js)
+  hemi.color.set(R.hemi.sky); hemi.groundColor.set(R.hemi.ground); hemi.intensity = R.hemi.intensity;
+  sun.color.set(R.sun.color); sun.intensity = R.sun.intensity; fill.color.set(R.fill.color); fill.intensity = R.fill.intensity;
+  if (!QS.get('exp')) renderer.toneMappingExposure = R.exposure;
   applyGhostLook(n);
   nightFx.clear();
-  if (!n || !V) return;
+  if (!R.lamps || !V) return;
   // warm windows. EVERY lit piece gets an unlit glow: an additive halo + a warm pool on the ground in front of it (both cost what an
   // emissive material costs). Real PointLights stay capped at NIGHT_REAL_LIGHTS (each one is paid by every lit fragment), and go to the
   // pieces that matter most: the 2×2 special first, then the other 2×2s, then board order. Windows / flames / crystals are emissive in the themes.
@@ -813,6 +817,7 @@ function applyNight(){
       pool.position.set(pos.x - .12*(s.w||1), TILE_TOP + .012, pos.z - .12*(s.d||1)); pool.scale.setScalar(big ? 1.9 : 1.3); pool.renderOrder = 2; nightFx.add(pool); }
     const g = new THREE.Sprite(new THREE.SpriteMaterial({ map:TEX.glow, color:0xFFB060, transparent:true, opacity: real.has(s) ? .3 : .4, blending:THREE.AdditiveBlending, depthWrite:false }));
     g.position.copy(pos); g.scale.setScalar(big ? 1.5 : 1.1); nightFx.add(g); });
+  if (!n) return;                                   // a night-mood theme in the day view: lamps yes, fireflies (and the endless loop) no
   const r = rngFrom(5);
   for (let i=0;i<24;i++){
     const f = new THREE.Sprite(new THREE.SpriteMaterial({ map:TEX.glow, color:0xFFE9A0, transparent:true, opacity:.9, blending:THREE.AdditiveBlending, depthWrite:false }));
@@ -1108,13 +1113,20 @@ document.getElementById('themeCard').addEventListener('click', () => setSheet('a
 
 /* ════════════════════════ HUD ════════════════════════ */
 const hud = document.getElementById('hud');
-document.getElementById('hudTheme').innerHTML = LIST.map(t => '<button class="b" data-theme="'+t.id+'">'+t.name+'</button>').join('');
+/* theme switch: one compact <select>, season order, grouped by batch (1–18 / 19–42) */
+{ const BATCHES = [['Batch 1 · seasons 1–3', 1, 3], ['Batch 2 · seasons 4–18', 4, 18], ['Batch 3 · seasons 19–42', 19, 99]];
+  const bySeason = [...LIST].sort((a, b) => (a.season||99) - (b.season||99));
+  document.getElementById('hudTheme').innerHTML = BATCHES.map(([lab, lo, hi]) => { const ts = bySeason.filter(t => (t.season||99) >= lo && (t.season||99) <= hi);
+    return ts.length ? '<optgroup label="'+lab+'">'+ts.map(t => '<option value="'+t.id+'">'+t.season+' · '+t.name+'</option>').join('')+'</optgroup>' : ''; }).join(''); }
 document.getElementById('hudToggle').addEventListener('click', () => document.body.classList.toggle('hudopen'));
 (() => { const mq = matchMedia('(max-width: 940px)'); const s = () => document.body.classList.toggle('narrow', mq.matches); mq.addEventListener('change', s); s(); })();
 hud.addEventListener('click', async e => { const gb = e.target.closest('button[data-grow]'); if (gb) { S.grow = gb.dataset.grow; await buildView(); renderChrome(); return; }
-  const b = e.target.closest('button[data-theme]'); if (!b || b.dataset.theme === S.theme) return;
-  S.theme = b.dataset.theme; S.pieces = TH().startComplete ? TH().slots.length : 14; phone.dataset.theme = S.theme; resetPlaced(); renderPacks(); setSheet('0');
-  document.getElementById('gloading').classList.remove('gone'); await buildView(); document.getElementById('gloading').classList.add('gone'); renderChrome(); });
+});
+async function switchTheme(id){ if (!id || id === S.theme || !REG[id]) return;
+  S.theme = id; S.pieces = TH().startComplete ? TH().slots.length : 14; phone.dataset.theme = S.theme; resetPlaced(); renderPacks(); setSheet('0');
+  document.getElementById('gloading').classList.remove('gone'); await buildView(); document.getElementById('gloading').classList.add('gone'); renderChrome(); }
+document.getElementById('hudTheme').addEventListener('change', e => switchTheme(e.target.value));
+window.__switchTheme = switchTheme;   // scripted smoke test: loop the HUD switch through every theme
 const sP = document.getElementById('sPieces'), sM = document.getElementById('sMins');
 let tP; sP.addEventListener('input', () => { S.pieces = +sP.value; document.getElementById('vPieces').textContent = S.pieces;
   clearTimeout(tP); tP = setTimeout(async () => { resetPlaced(); document.getElementById('banner').classList.remove('on'); await buildView(); renderChrome(); }, 120); });
@@ -1128,7 +1140,7 @@ document.getElementById('hudRm').addEventListener('click', () => { S.rm = !S.rm;
 document.getElementById('hudSpec').addEventListener('click', () => runExport('spec', true));
 document.getElementById('hudSprites').addEventListener('click', () => runExport('sprites', true));
 function syncHud(){
-  hud.querySelectorAll('[data-theme]').forEach(b => b.classList.toggle('on', b.dataset.theme===S.theme));
+  document.getElementById('hudTheme').value = S.theme;
   hud.querySelectorAll('[data-grow]').forEach(b => b.classList.toggle('on', b.dataset.grow===S.grow));
   sP.value = placed.length; document.getElementById('vPieces').textContent = placed.length;
   sM.value = S.mins; document.getElementById('vMins').textContent = S.mins;

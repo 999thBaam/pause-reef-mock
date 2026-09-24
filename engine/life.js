@@ -9,6 +9,7 @@ import { T, addModel, fitScale } from './kit.js';
 const FLOWER_TINTS = [0xF59BB8, 0xF4C84A, 0xFFF4E0, 0xB7A2F0];
 const TINTED = new Map();
 export function tintedFlower(parent, name, k, x, y, z, rot, tint){
+  if (!T()[name]) return;                     // Flower_3/4 live in the farm kit; kit-a-primary themes simply get none (no console noise)
   const g = addModel(parent, name, k, x, y, z, rot); if (!g) return;
   g.traverse(o => { if (o.isMesh && /Cyan|Yellow/.test(o.material.name||'')) { const key = o.material.uuid + tint;
     if (!TINTED.has(key)) { const m2 = o.material.clone(); m2.color.setHex(tint); TINTED.set(key, m2); } o.material = TINTED.get(key); } });

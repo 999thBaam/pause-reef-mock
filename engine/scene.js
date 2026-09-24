@@ -14,6 +14,24 @@ export const RIG = {
   toneMapping:'neutral', exposure:1
 };
 
+/* Per-theme light rig. A theme may set `mood` (a preset below) and/or `lights` = { hemi:{sky,ground,intensity}, sun:{color,intensity},
+   fill:{color,intensity}, exposure, lamps, night:{ hemi, sun, fill, exposure } }; lamps:true lights the night lamps (warm pools + halos, no
+   fireflies) in the day view too, for themes that live at night. Every key is optional and overrides the shared RIG
+   (day: RIG → mood → lights; night: RIG.night → lights.night). Direction, shadows and camera never change, so sprites stay aligned. */
+export const MOODS = {
+  night:{ hemi:{ sky:0x7C93CC, ground:0x1C2440, intensity:1.25 }, sun:{ color:0xAFC2FF, intensity:1.3 }, fill:{ color:0x8FA6FF, intensity:.5 }, exposure:.95, lamps:true },
+  dusk: { hemi:{ sky:0xC7B6E6, ground:0x5A4668, intensity:1.45 }, sun:{ color:0xFFC9A8, intensity:1.9 }, fill:{ color:0xB3A6FF, intensity:.5 } }
+};
+const pick = (o, k) => (o && o[k]) || {};
+export function rigFor(th, night){
+  const L = (th && th.lights) || {}, mood = (th && MOODS[th.mood]) || {};
+  const layers = night ? [{ hemi:RIG.night.hemi, sun:RIG.night.sun, fill:RIG.night.fill }, L.night || {}]
+                       : [{ hemi:RIG.hemi, sun:RIG.sun, fill:RIG.fill }, mood, L];
+  const out = { hemi:{ ...RIG.hemi }, sun:{ color:RIG.sun.color, intensity:RIG.sun.intensity }, fill:{ color:RIG.fill.color, intensity:RIG.fill.intensity }, exposure:RIG.exposure, lamps:!!night };
+  for (const l of layers) { for (const k of ['hemi','sun','fill']) Object.assign(out[k], pick(l, k)); if (l.exposure != null) out.exposure = l.exposure; if (l.lamps != null) out.lamps = l.lamps; }
+  return out;
+}
+
 export const scene = new THREE.Scene();
 export const CAM_DIR = new THREE.Vector3(...RIG.camDir).normalize();
 export const hemi = new THREE.HemisphereLight(RIG.hemi.sky, RIG.hemi.ground, RIG.hemi.intensity); scene.add(hemi);

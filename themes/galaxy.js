@@ -452,7 +452,8 @@ function gxAmbient(){
 function residentPlan(){ const h = GRID/2, top = V.gxTop || 2.3;
   return {
     comets:[0,1,2].map(i => ({ cx:0, cz:0, rx:h - 1 - i*.4, rz:h - 1.3 - i*.3, h:top*.72 - i*.2, sp:.34 - i*.05, ph:1.2 + i*2.1, bob:.2 })),
-    whales:[{ cx:0, cz:0, rx:h - 1.1, rz:h - 1.5, h:top*.6, sp:.16, ph:-1.2, bob:.1, L:1.6 }, { cx:0, cz:0, rx:h - 1.1, rz:h - 1.5, h:top*.6 - .3, sp:.16, ph:-.75, bob:.08, L:.9 }]
+    // phases put both whales on the far-left side at the frozen frame (t 2.1), clear of the galaxy core in the right-hand corner
+    whales:[{ cx:0, cz:0, rx:h - 1.1, rz:h - 1.5, h:top*.6, sp:.16, ph:2.2, bob:.1, L:1.6 }, { cx:0, cz:0, rx:h - 1.1, rz:h - 1.5, h:top*.6 - .3, sp:.16, ph:2.75, bob:.08, L:.9 }]
   };
 }
 function spawnGroup(i, plan){
@@ -488,6 +489,8 @@ export default {
     special: { label:'the galaxy core',      tag:'Special' }
   },
   slots:SLOTS, order:FARM_ORDER,
+  // a dimmer, violet rig: the stars, nebula and core are emissive, so less white key light lets them glow instead of washing out
+  lights:{ hemi:{ sky:0xD8CCFF, ground:0x2A1F52, intensity:1.3 }, sun:{ color:0xF2E4FF, intensity:1.8 }, fill:{ color:0xA88CFF, intensity:.6 } },
   ground:{ tile:GX_TILE, tileMap:gxTileMap },
   icon:'<svg viewBox="0 0 24 24" width="19" height="19"><path d="M12 12c0-2 2.6-2.6 3.8-1 1.8 2.3-.6 5.8-3.8 5.8-4 0-6.2-4.4-4.2-7.8C10 5.6 15.8 5 18.6 8.4" fill="none" stroke="#D65BB0" stroke-width="2" stroke-linecap="round"/><path d="M12 12c0 2-2.6 2.6-3.8 1-1.8-2.3.6-5.8 3.8-5.8" fill="none" stroke="#3FC2C4" stroke-width="2" stroke-linecap="round" opacity=".9"/><circle cx="12" cy="12" r="1.8" fill="#FFE2B0"/><circle cx="19.5" cy="17.5" r="1.4" fill="#A07CF0"/></svg>',
   silhouette:'<g fill="currentColor"><path d="M14 40 64 18l50 22v58l-50 22-50-22z" opacity=".35"/><path d="M64 70c0-8 10-10 15-4 7 9-2 22-15 22-16 0-24-17-16-30 8-13 30-15 41-2" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round"/><circle cx="64" cy="70" r="7"/><circle cx="30" cy="54" r="5"/><circle cx="98" cy="90" r="6"/><circle cx="92" cy="40" r="3"/></g>',
